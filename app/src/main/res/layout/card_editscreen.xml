@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <EditText
+        android:id="@+id/cardName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Card Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/cardType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Type"
+        android:inputType="textPersonName" />
+
+    <NumberPicker
+        android:id="@+id/typePicker"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_weight="0.29" />
+
+    <EditText
+        android:id="@+id/cardDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/cardHealth"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="health"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/cardAttack"
+        android:layout_width="109dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="attack"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/cardMana"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="mana"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/cardSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/deleteCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete" />
+</LinearLayout>

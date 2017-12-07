@@ -16,6 +16,7 @@ export class HomeScreen extends React.Component
 {
     static navigationOptions = {
         title: 'Profile',
+        title: 'Register'
     };
     constructor(props)
     {
@@ -89,6 +90,7 @@ export class HomeScreen extends React.Component
                 <Button title="Submit" onPress={() =>
                     Communications.email(['paulsummerblack@gmail.com'], null, null, this.state.text)
                 }/>
+                <Button title="Register" onPress={() => navigate('Register')} />
                     <ListView
                     refreshControl = {<RefreshControl
                         refreshing={this.state.refreshing}

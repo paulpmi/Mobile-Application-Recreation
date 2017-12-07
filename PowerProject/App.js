@@ -3,10 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import { HomeScreen} from "./HomePage";
 import {DrawerViewPropsExceptRouter as navigation, StackNavigator, TabNavigator} from "react-navigation";
 import {EditScreen} from "./EditPage";
+import {RegisterScreen} from "./Register";
+import {CardCreateScreen} from "./CardCreate";
 
 const App = StackNavigator({
     Home: {screen: HomeScreen},
     Profile: { screen: EditScreen },
+    Register: { screen: RegisterScreen },
+    CardScreen: {screen: CardCreateScreen}
 });
 
 export default App;

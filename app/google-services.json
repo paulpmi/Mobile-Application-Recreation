@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "118129358722",
+    "firebase_url": "https://mobileapp-50d6f.firebaseio.com",
+    "project_id": "mobileapp-50d6f",
+    "storage_bucket": "mobileapp-50d6f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118129358722:android:ae8782298c323294",
+        "android_client_info": {
+          "package_name": "com.example.paulp.hangouts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118129358722-sope6l8v2u8ood9l2t6ppi0fejgabi1i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1aGVcAP-jzjRqXWxB-cxUJH_n_LOwrXA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

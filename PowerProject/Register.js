@@ -12,8 +12,10 @@ export class RegisterScreen extends React.Component{
         super(props);
         let {params} = this.props.navigation.state;
         this.fireapp = params.database;
-        this.itemsRef = this.fireapp.database().ref().child("users");
-        this.itemsRef.keepSynced(true);
+        this.itemsRef = this.fireapp.database().ref();
+
+        //this.itemsRef.keepSynced(true);
+
         this.state = {
             database: this.fireapp,
             username: "",
@@ -40,7 +42,7 @@ export class RegisterScreen extends React.Component{
 
             <Button title="Register" onPress={
                 () => {
-                    this.itemsRef.child(this.state.username).set({
+                    this.itemsRef.child("users").child(this.state.username).set({
                         Password: this.state.password,
                         Email: this.state.username
                     });

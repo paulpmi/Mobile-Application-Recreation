@@ -18,7 +18,7 @@ export class CardCreateScreen extends React.Component{
 
         this.database = params.database;
         this.itemsRef = this.database.database().ref();
-        this.itemsRef.keepSynced(true);
+        //this.itemsRef.keepSynced(true);
         let a = params.data;
         this.state = {
             cardName: "",

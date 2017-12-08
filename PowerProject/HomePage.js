@@ -18,6 +18,7 @@ let firebaseConfig = {
     authDomain: "<your-auth-domain>",
     databaseURL: "https://mobileapp-50d6f.firebaseio.com/",
     storageBucket: "<your-storage-bucket>",
+    persistence: true
 };
 let firebaseApp = firebase.initializeApp(firebaseConfig);
 

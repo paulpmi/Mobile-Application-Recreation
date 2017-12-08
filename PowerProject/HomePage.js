@@ -27,7 +27,8 @@ export class HomeScreen extends React.Component
     static navigationOptions = {
         title: 'Profile',
         title: 'Login',
-        title: 'Register'
+        title: 'Register',
+        title: 'Chart'
     };
     constructor(props)
     {
@@ -104,7 +105,8 @@ export class HomeScreen extends React.Component
                 }/>
                 <Button title="Register" onPress={() => navigate('Register', {database: firebaseApp})} />
                 <Button title="Login" onPress={() => navigate('Login', {database: firebaseApp})} />
-                    <ListView
+                <Button title="Chart" onPress={() => navigate('Chart', {database: firebaseApp})} />
+                <ListView
                     refreshControl = {<RefreshControl
                         refreshing={this.state.refreshing}
                         onRefresh={this._onRefresh.bind(this)}

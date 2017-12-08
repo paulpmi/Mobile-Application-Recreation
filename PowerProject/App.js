@@ -6,13 +6,15 @@ import {EditScreen} from "./EditPage";
 import {RegisterScreen} from "./Register";
 import {CardCreateScreen} from "./CardCreate";
 import {LoginScreen} from "./Login";
+import {ChartScreen} from "./ChartScreen";
 
 const App = StackNavigator({
     Home: {screen: HomeScreen},
     Profile: { screen: EditScreen },
     Register: { screen: RegisterScreen },
     CardScreen: {screen: CardCreateScreen},
-    Login: {screen: LoginScreen}
+    Login: {screen: LoginScreen},
+    Chart: {screen: ChartScreen}
 });
 
 export default App;

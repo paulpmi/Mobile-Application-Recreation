@@ -9,16 +9,21 @@ import {EditScreen} from "./EditPage";
 import * as navigation from "react-navigation";
 import Communications from 'react-native-communications'
 import * as firebase from 'firebase';
+//import '@firebase/messaging';
+//import RNFirebase from 'react-native-firebase';
 //import * as Linking from "react-native";
 //import * as Linking from "react-native";
 
 
 let firebaseConfig = {
-    apiKey: "<your-api-key>",
-    authDomain: "<your-auth-domain>",
+    apiKey: "AIzaSyBHrCkg-02ggqeToAEyzk1D3KsPSHp3mok",
+    authDomain: "mobileapp-50d6f.firebaseapp.com",
     databaseURL: "https://mobileapp-50d6f.firebaseio.com/",
-    storageBucket: "<your-storage-bucket>",
-    persistence: true
+    storageBucket: "mobileapp-50d6f.appspot.com",
+    persistence: true,
+    projectId: "mobileapp-50d6f",
+    messagingSenderId: "118129358722"
+    //debug: true
 };
 let firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -28,11 +33,13 @@ export class HomeScreen extends React.Component
         title: 'Profile',
         title: 'Login',
         title: 'Register',
-        title: 'Chart'
+        title: 'Chart',
+        title: 'CardList'
     };
     constructor(props)
     {
         super(props);
+
 
         let ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
@@ -41,13 +48,20 @@ export class HomeScreen extends React.Component
         let qkjfha = ["item1","item2","item3","item4","item5"];
         this.state = {
 
-            dataS : qkjfha,
-            dataSource:ds.cloneWithRows(qkjfha),
-            text:"",
-            old : "",
+            dataS: qkjfha,
+            dataSource: ds.cloneWithRows(qkjfha),
+            text: "",
+            old: "",
             url: "",
-            refreshing : false,
-        }
+            refreshing: false,
+        };
+
+        //const a = firebaseApp.messaging();
+    }
+
+    componentDidMount(){
+        if (firebaseApp.auth().currentUser)
+            firebaseApp.database().ref().child("usersTokens").child(firebaseApp.auth().currentUser).set(firebaseApp.messaging().getToken());
     }
 
     returnData(id, old, name) {
@@ -106,6 +120,7 @@ export class HomeScreen extends React.Component
                 <Button title="Register" onPress={() => navigate('Register', {database: firebaseApp})} />
                 <Button title="Login" onPress={() => navigate('Login', {database: firebaseApp})} />
                 <Button title="Chart" onPress={() => navigate('Chart', {database: firebaseApp})} />
+                <Button title="CardList" onPress={() => navigate('CardList', {database: firebaseApp})} />
                 <ListView
                     refreshControl = {<RefreshControl
                         refreshing={this.state.refreshing}

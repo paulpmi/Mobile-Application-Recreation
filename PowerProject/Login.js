@@ -3,8 +3,12 @@
  */
 import * as React from "react/cjs/react.production.min";
 import {Button, TextInput, View} from "react-native";
-import * as firebase from 'firebase';
+//import * as firebase from 'firebase';
 import Alert from "react-native";
+//import * as firebase from "react-native-firebase";
+//import * as admin from "react-native-firebase";
+//import * as admin from "react-native-firebase";
+//import * as admin from "firebase-admin"
 
 export class LoginScreen extends React.Component {
     static navigationOptions = {
@@ -17,11 +21,15 @@ export class LoginScreen extends React.Component {
         let {params} = this.props.navigation.state;
         this.fireapp = params.database;
         this.itemsRef = this.fireapp.database().ref().child("users");
+        this.authRef = this.fireapp.auth();
+        //this.messageRef = this.fireapp.messaging();
+            //admin.messaging(this.fireapp);
         this.state = {
             database: this.fireapp,
             username: "",
             password: ""
         };
+
     }
 
     render(){
@@ -43,17 +51,23 @@ export class LoginScreen extends React.Component {
 
                 <Button title="Login" onPress={
                     () => {
-                        this.itemsRef.child(this.state.username).once('value', (snapshot) => {
-                            let exists = (snapshot.val() !== null);
-                            if (exists)
-                                navigate('CardScreen', {data: this.state.username, database: this.state.database});
-                            else
-                                alert('Username Does not exist',
-                                    'Username Does not exist',
-                                    {text: 'OK', onPress: () => console.log('OK Pressed')},
-                                    { cancelable: false }
-                                );
-                        })}}/>
+                        try {
+                            this.authRef.signInWithEmailAndPassword(this.state.username, this.state.password)
+                                .then(() => {
+
+                                //this.itemsRef.child("usersTokens").child(this.authRef.currentUser).set(this.messageRef.getToken());
+
+                                navigate('CardScreen', {
+                                        data: this.state.username,
+                                        database: this.state.database
+                                    });},
+                                (error) => { alert("Wrong username or password")}
+                                )
+                        }
+                        catch(e) { alert("Wrong username or password") }
+                    }}
+                />
+
             </View>
         );
     }

@@ -13,6 +13,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +28,12 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Card> CardList = new ArrayList<>();
     CardAdapter CardAdapter;
     ListView resultListView;
-    Button registerButton;
+    Button loginButton;
     EditText CardnameText;
 
     Button cardButton;
+    Button actualRegisterButton;
+    Button logoutButton;
     int pos;
 
     @Override
@@ -32,20 +41,50 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        registerButton = (Button)findViewById(R.id.button);
-        registerButton.setX(500);
-        registerButton.setY(200);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        FirebaseDatabase.getInstance().setLogLevel(Logger.Level.DEBUG);
+
+        loginButton = (Button)findViewById(R.id.button);
+        loginButton.setX(500);
+        loginButton.setY(200);
         CardnameText   = (EditText)findViewById(R.id.editText);
-        CardnameText.setX(registerButton.getX() - 20);
-        CardnameText.setY(registerButton.getY() - 80);
+        CardnameText.setX(loginButton.getX() - 20);
+        CardnameText.setY(loginButton.getY() - 80);
+
+        actualRegisterButton = (Button) findViewById(R.id.register);
+        actualRegisterButton.setX(500);
+        actualRegisterButton.setY(600);
 
         cardButton = (Button) findViewById(R.id.cardListButton);
+        cardButton.setX(500);
+        cardButton.setY(500);
+
+        logoutButton = (Button) findViewById(R.id.logoutButton);
+        logoutButton.setX(700);
+        logoutButton.setY(700);
+
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        final FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            final DatabaseReference reference =
+                    FirebaseDatabase.getInstance().getReferenceFromUrl("https://mobileapp-50d6f.firebaseio.com/");
+            reference.child("usersTokens").child(user.getUid()).setValue(refreshedToken);
+        }
         CardAdapter = new CardAdapter(this, CardList);
         //ArrayAdapter<String> a = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, Cardnames);
         addItems();
 
         resultListView = (ListView) findViewById(R.id.results_listview);
         resultListView.setAdapter(CardAdapter);
+
+        actualRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegisterScreen.class);
+                startActivity(intent);
+            }
+        });
 
         cardButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +94,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        registerButton.setOnClickListener(
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null)
+                    FirebaseAuth.getInstance().signOut();
+            }
+        });
+
+        loginButton.setOnClickListener(
                 new View.OnClickListener()
                 {
                     public void onClick(View view)
@@ -78,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
                                     "There is no email client installed.", Toast.LENGTH_SHORT).show();
                         }
                     */
-
                         Intent intent = new Intent(MainActivity.this, LoginScreen.class);
                         startActivity(intent);
                     }

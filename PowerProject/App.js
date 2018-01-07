@@ -7,6 +7,8 @@ import {RegisterScreen} from "./Register";
 import {CardCreateScreen} from "./CardCreate";
 import {LoginScreen} from "./Login";
 import {ChartScreen} from "./ChartScreen";
+import {CardList} from "./CardList";
+import {LikeScreen} from "./LikeScreen";
 
 const App = StackNavigator({
     Home: {screen: HomeScreen},
@@ -14,8 +16,10 @@ const App = StackNavigator({
     Register: { screen: RegisterScreen },
     CardScreen: {screen: CardCreateScreen},
     Login: {screen: LoginScreen},
-    Chart: {screen: ChartScreen}
-});
+    Chart: {screen: ChartScreen},
+    CardList: {screen: CardList},
+    LikeScreen: {screen: LikeScreen}}
+);
 
 export default App;
 

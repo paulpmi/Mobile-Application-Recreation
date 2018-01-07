@@ -1,9 +1,12 @@
 package com.example.paulp.hangouts;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 public class CardChart extends Activity {
 
     GraphView graph;
+    Button button;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +34,20 @@ public class CardChart extends Activity {
         setContentView(R.layout.card_chart);
 
         graph = (GraphView) findViewById(R.id.graph);
+        button = (Button) findViewById(R.id.chartGotoCards);
+
+        final String user = getIntent().getStringExtra("user");
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CardChart.this, CardEditScreen.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+            }
+        });
+
+        //final LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
 
         final DatabaseReference reference =
                 FirebaseDatabase.getInstance().getReferenceFromUrl("https://mobileapp-50d6f.firebaseio.com");
@@ -43,15 +61,17 @@ public class CardChart extends Activity {
                 for (DataSnapshot cards : dataSnapshot.getChildren()) {
                     if (cards.exists()) {
                         Card card = cards.getValue(Card.class);
-                        dataPoints[k] = new DataPoint(Integer.parseInt(card.mana), Integer.parseInt(card.health));
+                        Log.d("FOUNDED", card.attack + ' ' + card.health);
+                        dataPoints[k] = new DataPoint(Integer.parseInt(card.attack), Integer.parseInt(card.health));
                         k++;
                     }
                 }
 
                 DataPoint[] dp = new DataPoint[k];
-                for (int i = 0; i<k; i++)
+                for (int i = 0; i<k; i++) {
+                    Log.d("DATAPOINT", dataPoints[i].toString());
                     dp[i] = dataPoints[i];
-
+                }
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
                 graph.addSeries(series);
             }
@@ -61,5 +81,7 @@ public class CardChart extends Activity {
 
             }
         });
+
+
     }
 }

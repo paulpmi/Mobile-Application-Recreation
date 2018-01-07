@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 /**
  * Created by paulp on 12/2/2017.
@@ -51,8 +52,32 @@ public class LoginScreen extends Activity {
     }
 
     private void loginUser() {
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuth.signInWithEmailAndPassword(username.getText().toString(), password.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(LoginScreen.this, CardChart.class);
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            intent.putExtra("user", user.getUid().toString());
+                            Log.d("SUCESS LOGIN", "Success LOGIN");
+                            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+                            DatabaseReference reference =
+                                    FirebaseDatabase.getInstance().getReferenceFromUrl("https://mobileapp-50d6f.firebaseio.com/");
+                            reference.child("usersTokens").child(user.getUid()).setValue(refreshedToken);
+                            startActivity(intent);
+                        }
+                        else
+                            Log.d("ERROR LOGIN", task.getException().toString());
+
+                    }
+                });
         //fReference.child("users").child(username.getText().toString()).child()
 
+        /*
         fReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -73,6 +98,6 @@ public class LoginScreen extends Activity {
             public void onCancelled(DatabaseError firebaseError) {
 
             }
-        });
+        });*/
     }
 }

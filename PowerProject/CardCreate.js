@@ -75,9 +75,10 @@ export class CardCreateScreen extends React.Component{
 
                 <Button title="Add Card" onPress={() => {
                     this.itemsRef.child("cards").child(this.state.cardName)
-                        .set({User: this.state.cardUser, Type: this.state.cardType
-                            , Description: this.state.cardDescription, Mana: this.state.cardMana
-                            , Health: this.state.cardHealth, Attack: this.state.cardAttack
+                        .set({user: this.state.cardUser, type: this.state.cardType
+                            , desciption: this.state.cardDescription, mana: this.state.cardMana
+                            , health: this.state.cardHealth, attack: this.state.cardAttack,
+                            name: this.state.cardName
                         });
                     this.itemsRef.child("users").child(this.state.cardUser).child("cards").set({Cards: this.state.cardName});
 

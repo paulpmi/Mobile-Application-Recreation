@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -34,7 +35,6 @@ public class CardScreen extends Activity {
         setContentView(R.layout.card_screen);
         resultListView = (ListView) findViewById(R.id.cardList);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         createCardButton = (Button)findViewById(R.id.createCardButton);
 
         createCardButton.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +49,7 @@ public class CardScreen extends Activity {
 
         final DatabaseReference reference =
                 FirebaseDatabase.getInstance().getReferenceFromUrl("https://mobileapp-50d6f.firebaseio.com");
+
         reference.child("cards").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -77,6 +78,15 @@ public class CardScreen extends Activity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        resultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(CardScreen.this, LikeScreen.class);
+                intent.putExtra("data", parent.getItemAtPosition(position).toString());
+                startActivity(intent);
             }
         });
 

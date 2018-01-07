@@ -1,6 +1,7 @@
 import * as React from "react/cjs/react.production.min";
 import {Button, TextInput, View} from "react-native";
 import {NavigationScreenProp as navigate} from "react-navigation";
+//import * as firebase from "react-native-firebase";
 
 export class RegisterScreen extends React.Component{
 
@@ -13,6 +14,9 @@ export class RegisterScreen extends React.Component{
         let {params} = this.props.navigation.state;
         this.fireapp = params.database;
         this.itemsRef = this.fireapp.database().ref();
+        //console.log("passedITEMS");
+        this.authRef = this.fireapp.auth();
+        //console.log("passedITEMS");
 
         //this.itemsRef.keepSynced(true);
 
@@ -40,15 +44,12 @@ export class RegisterScreen extends React.Component{
                 onChangeText={(password) => this.setState({password})}
                 />
 
-            <Button title="Register" onPress={
-                () => {
-                    this.itemsRef.child("users").child(this.state.username).set({
-                        Password: this.state.password,
-                        Email: this.state.username
-                    });
-                    navigate('CardScreen', {data: this.state.username, database: this.state.database});
-                }
-            }/>
+                <Button title="Register" onPress={
+                    () => {
+                        this.authRef.createUserWithEmailAndPassword(this.state.username, this.state.password)
+                    }
+                }/>
+
             </View>
         );
     }

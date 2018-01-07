@@ -6,10 +6,15 @@
  */
 
 import * as React from "react/cjs/react.production.min";
+import Svg,{
+    Line
+} from 'react-native-svg';
+
 import { AreaChart } from 'react-native-svg-charts'
-import { Component } from 'react-native';
+import {Component, View} from 'react-native';
+//import {PropTypes} from 'react';
 import shape from 'd3-shape'
-import Chart from 'react-native-chart';
+//import Chart from 'react-native-s';
 
 const data = [[
     [0, 1],
@@ -46,15 +51,17 @@ export class ChartScreen extends React.Component {
         const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ];
 
         return (
-            <AreaChart
-                style={ { height: 200 } }
-                dataPoints={ data }
-                fillColor={ 'rgba(134, 65, 244, 0.2)' }
-                strokeColor={ 'rgb(134, 65, 244)' }
-                contentInset={ { top: 30, bottom: 30 } }
-                curve={shape.curveNatural}
-            />
+                <AreaChart
+                    style={ { height: 200 } }
+                    dataPoints={ data }
+                    fillColor={ 'rgba(134, 65, 244, 0.2)' }
+                    strokeColor={ 'rgb(134, 65, 244)' }
+                    contentInset={ { top: 30, bottom: 30 } }
+                    //curve={shape.curveNatural}
+                />
+
         );
     }
 
 }
+
